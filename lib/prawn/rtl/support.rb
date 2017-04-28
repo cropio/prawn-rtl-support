@@ -1,25 +1,20 @@
 # frozen_string_literal: true
-require 'prawn'
+
+require 'pdf/core/text'
 require 'prawn/rtl/support/version'
 require 'prawn/rtl/connector'
 
-module PrawnPatch
-  def array_from_tokens(tokens)
-    super.map do |record|
-      if record.include?(:text)
-        record[:text] = Prawn::Rtl::Connector(record[:text])
-      end
-      record
-    end
-  end
-end
-
 module Prawn
-  module Text
-    module Formatted
-      class Parser
-        class << self
-          prepend PrawnPatch
+  module Rtl
+    module Support
+      module PrawnTextPatch
+        def original_text
+          super.map do |h|
+            if h.key?(:text)
+              h[:text] = Prawn::Rtl::Connector.fix_rtl(h[:text])
+            end
+            h
+          end
         end
       end
     end
@@ -28,26 +23,9 @@ end
 
 module Prawn
   module Text
-    def text(string, options = {})
-      return false if string.nil?
-      # we modify the options. don't change the user's hash
-      options = options.dup
-
-      p = options[:inline_format]
-      if p
-        p = [] unless p.is_a?(Array)
-        options.delete(:inline_format)
-        array = text_formatter.format(string, *p)
-      else
-        array = [{ text: Prawn::Rtl::Connector(string) }]
-      end
-
-      formatted_text(array, options)
-    end
-
-    class Box
-      def initialize(string, options = {})
-        super([{ text: Prawn::Rtl::Connector(string) }], options)
+    module Formatted
+      class Box
+        prepend  Prawn::Rtl::Support::PrawnTextPatch
       end
     end
   end

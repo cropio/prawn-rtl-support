@@ -1,8 +1,13 @@
 # Prawn::Rtl::Support
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/prawn/rtl/support`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem provide bidirectional text support for Prawn. It uses Unicode Bidirectional Algorithm for displaying text from [TwitterCldr::Shared::Bidi](https://github.com/twitter/twitter-cldr-rb) and connect arabic letters using [Arabic Letter Connector](https://github.com/staii/arabic-letter-connector). Prawn patching is minimal, we patch only [`Prawn::Text::Formatted::Box#original_text`](https://github.com/prawnpdf/prawn/blob/master/lib/prawn/text/formatted/box.rb#L367). 
 
-TODO: Delete this and the text above, and describe your gem
+## Motivation
+
+Ruby and Rails internally provide unicode string normalization and store normalized letters inside. But Prawn don't connect arabic glyphs back and don't suport mixet LTR and RTL string. This gem add this suport. 
+
+## Acknowledgment
+This gem use same code as [Arabic Letter Connector](https://github.com/staii/arabic-letter-connector) by [@staii](https://github.com/staii) and therefore based on [Arabic-Prawn](https://rubygems.org/gems/Arabic-Prawn/versions/0.0.1) by Dynamix Solutions (Ahmed Nasser).
 
 ## Installation
 
@@ -12,9 +17,7 @@ Add this line to your application's Gemfile:
 gem 'prawn-rtl-support'
 ```
 
-And then execute:
-
-    $ bundle
+And that's all. Your Prawn is patched!
 
 Or install it yourself as:
 
@@ -22,7 +25,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+`prawn-rtl-support` provide method [`Prawn::Rtl::Connector#fix_rtl(string)`](https://github.com/cropio/prawn-rtl-support/blob/master/lib/prawn/rtl/connector.rb#L13) which reverse string and connect arabic letters.
+Prawn patching is minimal, we patch only [`Prawn::Text::Formatted::Box#original_text`](https://github.com/prawnpdf/prawn/blob/master/lib/prawn/text/formatted/box.rb#L367).
 
 ## Development
 
@@ -32,10 +36,10 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/prawn-rtl-support. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/cropio/prawn-rtl-support. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
