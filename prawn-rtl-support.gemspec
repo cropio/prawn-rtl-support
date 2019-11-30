@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ozeron@me.com"]
 
   spec.summary       = 'Gem which patch prawn to provide support of arabic language.'
-  spec.description   = 'Add suport for arabic language in prawn. '
+  spec.description   = 'Add suport for arabic language in prawn.'
   spec.homepage      = "https://github.com/cropio/prawn-rtl-support"
   spec.license       = "MIT"
 
@@ -21,11 +21,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.14"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "pry", "~> 0.10"
-  spec.add_development_dependency "rubocop", "~> 0.48"
-  spec.add_dependency "prawn", "~> 2.2"
-  spec.add_dependency "twitter_cldr", "~> 4.3"
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'pry', '~> 0.12'
+  spec.add_development_dependency 'rubocop', '~> 0.77'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.5'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.37'
+
+  spec.add_dependency 'prawn', '~> 2.2'
+  spec.add_dependency 'twitter_cldr', '>= 4.0', '< 6.0'
 end
