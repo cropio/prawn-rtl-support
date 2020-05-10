@@ -25,7 +25,7 @@ module Prawn
   module Text
     module Formatted
       class Box
-        prepend  Prawn::Rtl::Support::PrawnTextPatch
+        prepend Prawn::Rtl::Support::PrawnTextPatch
       end
     end
   end
